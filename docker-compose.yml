@@ -1,0 +1,20 @@
+# custom app config
+# overrides DCAPE/apps/drone/dcape-app/docker-compose.yml
+
+services:
+  app:
+    volumes:
+      - ${APP_ROOT}/step:/home/step
+#      - ${DCAPE_ROOT}/${DATA_PATH}/step:/home/step
+    ports:
+      - 9000:9000
+    labels:
+      - traefik.http.services.${APP_TAG}.loadbalancer.server.port=9000
+      - traefik.http.services.${APP_TAG}.loadbalancer.serversTransport=mytransport
+    environment:
+      - DOCKER_STEPCA_INIT_NAME=Smallstep
+      - DOCKER_STEPCA_INIT_DNS_NAMES="localhost,${APP_HOST}"
+      - DOCKER_STEPCA_INIT_REMOTE_MANAGEMENT=true
+      - DOCKER_STEPCA_INIT_SSH=true
+      - DOCKER_STEPCA_INIT_ACME=true
+      - DOCKER_STEPCA_INIT_PASSWORD=${ADMIN_PASSWORD}
