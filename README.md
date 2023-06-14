@@ -20,6 +20,17 @@
 * [docker](http://docker.io)
 * [dcape](https://github.com/dopos/dcape)
 * Git service ([github](https://github.com), [gitea](https://gitea.io) or [gogs](https://gogs.io))
+- file `var/traefik/custom/insecure.yml` with 
+```
+http:
+  serversTransports:
+    insecure:
+      insecureSkipVerify: true
+```
+- traefik ENV `LEGO_CA_CERTIFICATES="/etc/traefik/root_ca.crt"` with generated crt from step-ca.
+- add X1 root crt to `LEGO_CA_CERTIFICATES` in case LetsEncrypt using together.
+- correct dns resolver and authoritative config in case private domain using.
+- configure traefik.yml `certificatesResolvers` section
 
 ## Usage
 
