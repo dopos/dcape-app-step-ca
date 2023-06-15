@@ -18,8 +18,32 @@
 
 * linux 64bit (git, make, wget, gawk, openssl)
 * [docker](http://docker.io)
-* [dcape](https://github.com/dopos/dcape)
+* [dcape](https://github.com/dopos/dcape) with prepared [traefik](https://traefik.io/)
 * Git service ([github](https://github.com), [gitea](https://gitea.io) or [gogs](https://gogs.io))
+
+## Traefik config
+
+```traefik.yml
+certificatesResolvers:
+  stepca:
+    acme:
+      email: USER@EMAIL
+      storage: /etc/traefik/acme.json
+      caServer: "https://APP_SITE:9000/acme/acme/directory"
+      certificatesDuration: 2160 # 90 days
+      tlsChallenge: true
+      dnsChallenge:
+        provider: pdns
+      httpChallenge:
+        entryPoint: web
+```
+
+```traefik.env
+# https://smallstep.com/docs/tutorials/acme-protocol-acme-clients/#traefik
+LEGO_CA_CERTIFICATES=/etc/traefik/root_ca.crt
+```
+
+* Prepared traefik
 - file `var/traefik/custom/insecure.yml` with 
 ```
 http:
