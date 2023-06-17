@@ -109,6 +109,9 @@ ca-install:
 	sudo cp data/certs/root_ca.crt /usr/local/share/ca-certificates/$(APP_NAME).crt
 	sudo /usr/sbin/update-ca-certificates
 
+ca-test:
+	curl https://$(APP_SITE)/health
+
 DO ?= sh
 
 ## run command if container is running
