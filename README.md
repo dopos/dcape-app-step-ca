@@ -23,6 +23,8 @@
 
 ## Traefik config
 
+### traefik.yml
+
 ```traefik.yml
 certificatesResolvers:
   stepca:
@@ -38,23 +40,12 @@ certificatesResolvers:
         entryPoint: web
 ```
 
+### traefik.env
+
 ```traefik.env
 # https://smallstep.com/docs/tutorials/acme-protocol-acme-clients/#traefik
 LEGO_CA_CERTIFICATES=/etc/traefik/root_ca.crt
 ```
-
-* Prepared traefik
-- file `var/traefik/custom/insecure.yml` with 
-```
-http:
-  serversTransports:
-    insecure:
-      insecureSkipVerify: true
-```
-- traefik ENV `LEGO_CA_CERTIFICATES="/etc/traefik/root_ca.crt"` with generated crt from step-ca.
-- add X1 root crt to `LEGO_CA_CERTIFICATES` in case LetsEncrypt using together.
-- correct dns resolver and authoritative config in case private domain using.
-- configure traefik.yml `certificatesResolvers` section
 
 ## Usage
 
