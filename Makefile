@@ -118,3 +118,27 @@ exec: dc
 ## Example: make run DO=ls
 run: CMD=run --rm app $(DO)
 run: dc
+
+PROV ?=  my-provisioner
+
+# set JWK times
+prov-time: CMD=run --rm app step ca provisioner update $(PROV) --x509-min-dur=20m --x509-max-dur=2400h --x509-default-dur=240h
+prov-time: dc
+
+
+CERT ?= $(NAME)
+
+#make cl NAME=user@domain CERT=user_domain
+
+# generate cert
+cl: CMD=exec app step ca certificate "$(NAME)" $(CERT).crt $(CERT).key  --not-after=2400h0m0s --provisioner $(PROV)
+cl: dc
+
+# inspect cert
+cli: CMD=exec app step certificate inspect --short $(CERT).crt
+cli: dc
+
+# prepare for browser
+%.pfx:
+	x=$@ ; name=$${x%.pfx} ; \
+	openssl pkcs12 -export -in $(APP_DATA)/$$name.crt -inkey $(APP_DATA)/$$name.key -out $@
