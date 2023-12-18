@@ -12,8 +12,7 @@ services:
     volumes:
       - /etc/timezone:/etc/timezone:ro
       - /etc/localtime:/etc/localtime:ro
-      - ${APP_ROOT}/data:/home/step
-#      - ${DCAPE_ROOT}/${DATA_PATH}/step:/home/step
+      - ${APP_DATA}:/home/step
     hostname: ${APP_SITE}
     labels:
       - traefik.enable=true
@@ -37,6 +36,6 @@ services:
 
 networks:
   lan:
-    external:
-      name: ${DCAPE_NET}
+    name: ${DCAPE_NET}
+    external: true
 
