@@ -25,8 +25,7 @@ APP_SITE        ?= stepca.dev.test
 
 # PgSQL used as DB
 USE_DB           = yes
-DCAPE_DC_USED    = false
-
+USE_DCAPE_DC    := no
 # ------------------------------------------------------------------------------
 
 # if exists - load old values
